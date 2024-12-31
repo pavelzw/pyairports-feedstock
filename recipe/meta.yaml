@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyairports-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pyairports-{{ version }}.tar.gz
   sha256: 3d60a727fce4da81b9c6393ea8ae0b33d67b37ece344dffc863f749e3ad62bcd
 
 build:
@@ -14,14 +14,15 @@ build:
     - pyairports=pyairports.airports:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.6
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -31,6 +32,7 @@ test:
     - pyairports --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/ozeliger/pyairports
